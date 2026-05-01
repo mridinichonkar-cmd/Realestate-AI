@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+env/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (if ever used)
+node_modules/
+
+# Environment variables
+.env
+
+# Large files (optional)
+*.log
