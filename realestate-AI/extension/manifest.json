@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Property Organiser Saver",
+  "version": "1.1",
+  "description": "Capture listing details from the current property page.",
+  "permissions": ["activeTab", "storage","scripting"],
+  "host_permissions": [
+    "https://www.realestate.com.au/*",
+    "https://www.domain.com.au/*",
+    "http://127.0.0.1:5000/",
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Save Property"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.realestate.com.au/*",
+        "https://www.domain.com.au/*",
+        "<all_urls>"
+      ],
+      "js": ["content.js"]
+    }
+  ]
+}

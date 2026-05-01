@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Property Saver</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      width: 320px;
+      padding: 12px;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+
+    .btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 999px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+    
+    .blue {
+    background: #213448;
+  }
+
+  .blue:hover {
+    background: #2e4965;
+  }
+
+  .green {
+    background: #547792;
+  }
+
+  .green:hover {
+    background: #6792b3;
+  }
+
+  .yellow {
+    background: #94B4C1;
+  }
+
+  .yellow:hover {
+    background: #70a5ba;
+  }
+
+  .purple {
+    background: #9ab0e6;
+  }
+
+  .purple:hover {
+    background: #7c8fc0;
+  }
+
+    .box {
+      margin-top: 12px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #f9f9f9;
+      white-space: pre-wrap;
+      font-size: 13px;
+      max-height: 220px;
+      overflow: auto;
+    }
+
+    .status {
+      margin-top: 10px;
+      font-size: 13px;
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+
+    a.open-link {
+      display: block;
+      margin-top: 10px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Property Saver</h2>
+
+  <button class="btn blue" id="extractBtn">Extract Current Listing</button>
+  <button class="btn green" id="saveBtn">Save to Extension Storage</button>
+  <button class="btn yellow" id="copyBtn">Copy JSON</button>
+
+  <button class="btn purple" id="openSavedBtn">Open Saved Listings</button>
+
+  <div id="status" class="status"></div>
+  <div id="output" class="box">No data yet.</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

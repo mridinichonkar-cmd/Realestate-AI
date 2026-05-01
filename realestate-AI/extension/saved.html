@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Saved Listings</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f7f7f7;
+    }
+
+    h1 {
+      margin-bottom: 16px;
+    }
+
+    .top-bar {
+      margin-bottom: 16px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 10px 14px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    th {
+      background: #ececec;
+    }
+
+    tr:nth-child(even) {
+      background: #fafafa;
+    }
+
+    .empty {
+      padding: 20px;
+      background: white;
+      border: 1px solid #ddd;
+    }
+
+    .notes-box {
+      width: 100%;
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    .small-btn {
+      padding: 6px 10px;
+      margin-top: 6px;
+      margin-right: 6px;
+      cursor: pointer;
+    }
+
+    .link-cell a {
+      word-break: break-all;
+    }
+
+    .edit-input {
+      width: 90px;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    select.edit-input {
+      width: 110px;
+    }
+    
+  </style>
+</head>
+<body>
+  <h1>Saved Property Listings</h1>
+
+  <div class="top-bar">
+    <button id="refreshBtn">Refresh</button>
+    <button id="clearBtn">Clear All Listings</button>
+  </div>
+
+  <div id="tableContainer"></div>
+
+  <script src="saved.js"></script>
+</body>
+</html>
