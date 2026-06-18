@@ -6,6 +6,8 @@ const cashRateInput = document.getElementById("cashRateInput");
 const medianIncomeInput = document.getElementById("medianIncomeInput");
 const kmFromCbdInput = document.getElementById("kmFromCbdInput");
 
+
+
 async function getSavedProperties() {
   const result = await chrome.storage.local.get(["savedProperties"]);
   return result.savedProperties || [];
@@ -44,7 +46,7 @@ function getVerdictClass(verdict) {
   return "unknown";
 }
 
-function getModelAssumptions() {
+function getCurrentAssumptions() {
   return {
     cash_rate: Number(cashRateInput.value) || 4.1,
     suburb_median_income: Number(medianIncomeInput.value) || 45000,
@@ -202,6 +204,9 @@ function attachEventHandlers(properties) {
     const index = Number(event.target.dataset.index);
     const property = properties[index];
     
+    const assumptions = getCurrentAssumptions();
+    await chrome.storage.local.set({ modelAssumptions: assumptions });
+    
     try{
       const payload = {
         suburb: property.suburb,
@@ -213,7 +218,7 @@ function attachEventHandlers(properties) {
         listed_price: property.listed_price,
 
         // frontend assumption tailored to user
-        ...getModelAssumptions()
+        ...assumptions
     };
 
     const response = await fetch("http://127.0.0.1:5000/predict",{
@@ -308,6 +313,19 @@ editInputs.forEach((input) => {
 
 
 async function loadTable() {
+  const result = await chrome.storage.local.get(["modelAssumptions"]);
+
+  if (result.modelAssumptions) {
+    cashRateInput.value =
+      result.modelAssumptions.cash_rate ?? 4.1;
+
+    medianIncomeInput.value =
+      result.modelAssumptions.suburb_median_income ?? 45000;
+
+    kmFromCbdInput.value =
+      result.modelAssumptions.km_from_cbd ?? 37;
+  }
+
   const properties = await getSavedProperties();
   createTable(properties);
 }
