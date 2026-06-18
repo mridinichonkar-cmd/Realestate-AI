@@ -3,96 +3,553 @@
 <head>
   <meta charset="UTF-8" />
   <title>Saved Listings</title>
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background: #f7f7f7;
+    :root {
+      --bg: #f4f7fb;
+      --panel: #ffffff;
+      --text: #172033;
+      --muted: #667085;
+      --border: #e4e7ec;
+      --primary: #1f4e79;
+      --primary-hover: #173c5f;
+      --danger: #b42318;
+      --danger-bg: #fff1f0;
+      --success: #027a48;
+      --warning: #b54708;
+      --shadow: 0 12px 30px rgba(16, 24, 40, 0.08);
     }
 
-    h1 {
-      margin-bottom: 16px;
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .page {
+      padding: 28px;
+    }
+
+    .header-card {
+      background: linear-gradient(135deg, #183b56, #1f4e79);
+      color: white;
+      border-radius: 18px;
+      padding: 26px 30px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .header-card h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      letter-spacing: -0.4px;
+    }
+
+    .header-card p {
+      margin: 0;
+      color: #d9e7f3;
+      font-size: 14px;
+    }
+
+    .assumption-controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: end;
+}
+
+.assumption-controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.assumption-controls input {
+  width: 120px;
+  height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0 10px;
+  font-size: 13px;
+  outline: none;
+}
+
+.assumption-controls input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(31, 78, 121, 0.12);
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+.metric-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+.metric-card span {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.metric-card strong {
+  font-size: 24px;
+  color: var(--text);
+}
+
+.metric-card.positive strong {
+  color: #027a48;
+}
+
+.metric-card.negative strong {
+  color: #b42318;
+}
+
+.listing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 18px;
+}
+
+.listing-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.listing-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 34px rgba(16, 24, 40, 0.12);
+}
+
+.listing-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.listing-header h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.listing-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.verdict-pill {
+  height: fit-content;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.verdict-pill.undervalued {
+  background: #ecfdf3;
+  color: #027a48;
+}
+
+.verdict-pill.overpriced {
+  background: #fff1f0;
+  color: #b42318;
+}
+
+.verdict-pill.fair {
+  background: #fffaeb;
+  color: #b54708;
+}
+
+.verdict-pill.unknown {
+  background: #f2f4f7;
+  color: #667085;
+}
+
+.property-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.property-meta span {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: #475467af;
+}
+
+.analysis-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.analysis-grid div {
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.analysis-grid span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.analysis-grid strong {
+  font-size: 17px;
+}
+
+.quick-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.edit-input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 10px;
+}
+
+.notes-box {
+  width: 100%;
+  min-height: 75px;
+  resize: vertical;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+  font-family: inherit;
+  margin-bottom: 14px;
+}
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.card-actions button {
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 16px;
+  margin: 0;
+
+  border: none;
+  border-radius: 10px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+@media (max-width: 900px) {
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .listing-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 550px) {
+  .metrics-grid,
+  .analysis-grid,
+  .quick-edit-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar-title {
+      font-size: 15px;
+      color: var(--muted);
     }
 
     .top-bar {
-      margin-bottom: 16px;
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
     }
 
     button {
+      border: none;
+      border-radius: 10px;
       padding: 10px 14px;
       cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    #refreshBtn {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 6px 14px rgba(31, 78, 121, 0.2);
+    }
+
+    #refreshBtn:hover {
+      background: var(--primary-hover);
+    }
+
+    #clearBtn {
+      background: var(--danger-bg);
+      color: var(--danger);
+    }
+
+    #clearBtn:hover {
+      background: #fee4e2;
+    }
+
+    #tableContainer {
+      background: var(--panel);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow-x: auto;
+      overflow-y: hidden;
     }
 
     table {
       width: 100%;
+      min-width: 1450px;
       border-collapse: collapse;
-      background: white;
-    }
+      }
 
-    th, td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: left;
-      vertical-align: top;
-      font-size: 14px;
+    thead {
+      background: #f8fafc;
     }
 
     th {
-      background: #ececec;
+      text-align: left;
+      padding: 14px 12px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
     }
 
-    tr:nth-child(even) {
-      background: #fafafa;
+    td {
+      padding: 14px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: 14px;
+      color: var(--text);
+    }
+    th,
+    td {
+      white-space: nowrap;
+    }
+
+
+    tbody tr {
+      transition: background 0.15s ease;
+    }
+
+    tbody tr:hover {
+      background: #f9fbfd;
     }
 
     .empty {
-      padding: 20px;
+      padding: 36px;
+      text-align: center;
+      color: var(--muted);
       background: white;
-      border: 1px solid #ddd;
+      font-size: 15px;
     }
 
+    .edit-input,
     .notes-box {
-      width: 100%;
-      min-height: 60px;
-      resize: vertical;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: #ffffff;
+      padding: 8px 10px;
+      font-size: 14px;
+      outline: none;
+      transition: border 0.15s ease, box-shadow 0.15s ease;
     }
 
-    .small-btn {
-      padding: 6px 10px;
-      margin-top: 6px;
-      margin-right: 6px;
-      cursor: pointer;
-    }
-
-    .link-cell a {
-      word-break: break-all;
+    .edit-input:focus,
+    .notes-box:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(31, 78, 121, 0.12);
     }
 
     .edit-input {
-      width: 90px;
-      padding: 6px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      width: 92px;
     }
 
     select.edit-input {
-      width: 110px;
+      width: 125px;
     }
+
+    .notes-box {
+      width: 170px;
+      min-height: 70px;
+      resize: vertical;
+      font-family: inherit;
+    }
+
     
+
+   
+    .predict-btn {
+      background: #ecfdf3;
+      color: #027a48;
+    }
+
+    .save-notes-btn {
+      background: #f2f4f7;
+      color: #344054;
+    }
+
+    .open-link {
+      background: #eef4ff;
+      color: #1f4e79;
+    }
+
+    .delete-btn {
+      background: #fff1f0;
+      color: #b42318;
+    }
+
+    .link-cell a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .link-cell a:hover {
+      text-decoration: underline;
+    }
+
+    td:nth-child(1) {
+      font-weight: 600;
+      min-width: 180px;
+    }
+
+    td:nth-child(2) {
+      color: var(--muted);
+      min-width: 220px;
+    }
+
+    td:nth-child(9),
+    td:nth-child(10) {
+      font-weight: 700;
+    }
+
+    td:nth-child(11) {
+      font-weight: 700;
+    }
+    td:nth-child(12),
+    td:nth-child(12) * {
+      white-space: normal;
+  }
+
+    @media (max-width: 900px) {
+      .page {
+        padding: 18px;
+      }
+
+      #tableContainer {
+        overflow-x: auto;
+      }
+
+      .header-card h1 {
+        font-size: 24px;
+      }
+    }
   </style>
 </head>
+
 <body>
-  <h1>Saved Property Listings</h1>
+  <main class="page">
+    <section class="header-card">
+      <h1>Saved Property Listings</h1>
+      <p>Manage, compare, predict, and track potential investment opportunities.</p>
+    </section>
 
-  <div class="top-bar">
-    <button id="refreshBtn">Refresh</button>
-    <button id="clearBtn">Clear All Listings</button>
-  </div>
+    <section class="toolbar">
+      <div class="toolbar-title">
+        View all your saved investment properties, add notes and run predictions to compare for the best opportunities.
+      </div>
 
-  <div id="tableContainer"></div>
+      <div class="assumption-controls">
+        <label>
+          Cash Rate %
+          <input id="cashRateInput" type="number" step="0.1" value="4.1">
+        </label>
+
+        <label>
+          Median Income
+          <input id="medianIncomeInput" type="number" value="45000">
+        </label>
+
+        <label>
+          KM from CBD
+          <input id="kmFromCbdInput" type="number" step="0.1" value="37">
+        </label>
+    </div>
+
+      <div class="top-bar">
+        <button id="refreshBtn">Refresh Listings</button>
+        <button id="clearBtn">Clear All</button>
+      </div>
+    </section>
+
+    <div id="tableContainer"></div>
+  </main>
 
   <script src="saved.js"></script>
 </body>
