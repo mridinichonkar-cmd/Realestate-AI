@@ -94,6 +94,7 @@ This project is for educational use.
 
 ### Screenshots
 <img width="628" height="499" alt="image" src="https://github.com/user-attachments/assets/7a5343fe-5225-4c82-8bda-6303a59cf6c9" />
-<img width="1933" height="498" alt="image" src="https://github.com/user-attachments/assets/9a91dda5-5215-46d5-abc6-c2eb91bb0c88" />
+<img width="1133" height="629" alt="image" src="https://github.com/user-attachments/assets/6df4b4f2-37bc-4c84-a081-1334243a45b1" />
+
 
 
